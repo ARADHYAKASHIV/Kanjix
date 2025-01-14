@@ -8,6 +8,7 @@ import './fonts.css'; // Import the custom font CSS file
 import logoImage from './assets/logo.jpg';
 import backgroundImage from './assets/kanjix.png';
 import blogoImage from './assets/Blogo.png'; // Import the Blogo image
+import kanjixGif from './assets/kanjix.gif'; // Import the GIF for mobile
 
 // Add a keyframe animation for slide-in
 const slideInFromRight = keyframes`
@@ -334,7 +335,6 @@ const KanjixImage = styled(motion.img)`
   z-index: 1;
 
   @media (max-width: 480px) {
-    @media (max-width: 480px) {
     right: 13%;
     top: 20%;
     transform: translateY(-50%);
@@ -344,9 +344,6 @@ const KanjixImage = styled(motion.img)`
     object-fit: cover; // Ensure the image covers the area without distortion
     object-position: right;
     content: url(${kanjixGif}); // Use the GIF for mobile
-  }
-
-
   }
 `;
 
@@ -622,7 +619,7 @@ function App() {
       />
 
       <KanjixImage
-        src={backgroundImage}
+        src={window.innerWidth <= 480 ? kanjixGif : backgroundImage} // Use GIF for mobile, PNG for desktop
         alt="Kanjix"
         initial={{ x: 200, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
