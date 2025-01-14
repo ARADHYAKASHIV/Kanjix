@@ -442,53 +442,53 @@ const PageFill = styled.div`
 `;
 
 // Add this styled component for the signature
-const Signature = styled.div`
-  position: fixed;
-  bottom: 15px;
-  left: 15px;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 0.65rem;
-  color: rgba(255, 255, 255, 0.5);
-  z-index: 10;
-  opacity: 0;
-  animation: fadeIn 0.5s ease forwards;
-  animation-delay: 2s;
-  letter-spacing: 0.5px;
+// const Signature = styled.div`
+//   position: fixed;
+//   bottom: 15px;
+//   left: 15px;
+//   font-family: 'Orbitron', sans-serif;
+//   font-size: 0.65rem;
+//   color: rgba(255, 255, 255, 0.5);
+//   z-index: 10;
+//   opacity: 0;
+//   animation: fadeIn 0.5s ease forwards;
+//   animation-delay: 2s;
+//   letter-spacing: 0.5px;
 
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+//   @keyframes fadeIn {
+//     from {
+//       opacity: 0;
+//       transform: translateY(10px);
+//     }
+//     to {
+//       opacity: 1;
+//       transform: translateY(0);
+//     }
+//   }
 
-  a {
-    color: rgba(218, 165, 32, 0.4);
-    text-decoration: none;
-    transition: color 0.3s ease;
+//   a {
+//     color: rgba(218, 165, 32, 0.4);
+//     text-decoration: none;
+//     transition: color 0.3s ease;
 
-    &:hover {
-      color: rgba(255, 255, 255, 0.6);
-    }
-  }
+//     &:hover {
+//       color: rgba(255, 255, 255, 0.6);
+//     }
+//   }
 
-  @media (max-width: 768px) {
-    bottom: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.6rem;
-  }
+//   @media (max-width: 768px) {
+//     bottom: 12px;
+//     left: 50%;
+//     transform: translateX(-50%);
+//     font-size: 0.6rem;
+//   }
 
-  @media (max-width: 480px) {
-    bottom: 10px;
-    left: 10px;
-    font-size: 0.55rem;
-  }
-`;
+//   @media (max-width: 480px) {
+//     bottom: 10px;
+//     left: 10px;
+//     font-size: 0.55rem;
+//   }
+// `;
 
 function App() {
   const [currentColorScheme, setCurrentColorScheme] = useState(colorSchemes.default);
@@ -734,9 +734,9 @@ function App() {
         style={{ '--mouse-x': mousePos.x, '--mouse-y': mousePos.y }}
       />
 
-      <Signature>
-        by <a href="https://aradhya.vercel.app/" target="_blank" rel="noopener noreferrer">Aradhya</a>
-      </Signature>
+      {/* <Signature>
+       by <a href="https://aradhya.vercel.app/" target="_blank" rel="noopener noreferrer">Aradhya</a>
+      </Signature> */}
     </AppContainer>
   );
 }
