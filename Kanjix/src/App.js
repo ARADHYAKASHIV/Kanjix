@@ -334,13 +334,17 @@ const KanjixImage = styled(motion.img)`
   z-index: 1;
 
   @media (max-width: 480px) {
-    right: 0;
-    top: 13%;
+    @media (max-width: 480px) {
+    right: 13%;
+    top: 20%;
     transform: translateY(-50%);
-    height: 90vh;
-    width: 100%;
-    object-fit: cover;
+    height: 62vh; // Set height to a smaller value for the GIF
+    width: auto; // Maintain aspect ratio
+    max-width: 100%; // Ensure it doesn't exceed the viewport width
+    object-fit: cover; // Ensure the image covers the area without distortion
     object-position: right;
+    content: url(${kanjixGif}); // Use the GIF for mobile
+  }
 
 
   }
