@@ -490,6 +490,22 @@ const PageFill = styled.div`
 //   }
 // `;
 
+const XCard = styled(SocialIcon)`
+  background: rgba(29, 161, 242, 0.1); // Light blue background
+  border-radius: 12px;
+  padding: 10px;
+  display: flex;
+  align-items: center; // Center the icon vertically
+  justify-content: flex-start; // Align items to the start
+  gap: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+`;
+
 function App() {
   const [currentColorScheme, setCurrentColorScheme] = useState(colorSchemes.default);
   const [isHovered, setIsHovered] = useState(false);
@@ -688,15 +704,19 @@ function App() {
       </ButtonContainer>
 
       <SocialMediaContainer>
-        <SocialIcon 
+        <XCard 
           href="https://x.com/KanjiiX"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <TwitterIcon width="28" height="28" viewBox="0 0 24 24">
-            <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-          </TwitterIcon>
-        </SocialIcon>
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 200 250">
+            <g fill="#1DA1F2" fillRule="nonzero" stroke="none" strokeWidth="1" strokeLinecap="butt" strokeLinejoin="miter" strokeMiterlimit="10" strokeDasharray="" strokeDashoffset="0" fontFamily="none" fontWeight="none" fontSize="none" textAnchor="none" style={{ mixBlendMode: 'normal' }}>
+              <g transform="scale(5.12,5.12)">
+                <path d="M5.91992,6l14.66211,21.375l-14.35156,16.625h3.17969l12.57617,-14.57812l10,14.57813h12.01367l-15.31836,-22.33008l13.51758,-15.66992h-3.16992l-11.75391,13.61719l-9.3418,-13.61719zM9.7168,8h7.16406l23.32227,34h-7.16406z"></path>
+              </g>
+            </g>
+          </svg>
+        </XCard>
 
         <SocialIcon 
           href="https://discord.gg/kanjix"
