@@ -420,7 +420,7 @@ const InteractiveButton = styled(motion.button)`
   @media (max-width: 480px) {
     font-size: 1.2rem;
     padding: 8px 30px;
-    margin-left: -100px;  // Center the button
+    margin-left: -115px;  // Center the button
   }
 `;
 
@@ -711,20 +711,51 @@ function App() {
               </InteractiveButton>
             </ButtonContainer>
 
-            {showIframe && ( // Conditionally render the iframe
-              <iframe 
-                src="https://nft-wallet-checker.vercel.app/" 
-                style={{ 
-                  position: 'fixed', 
-                  top: 0, 
-                  left: 0, 
-                  width: '100%', 
-                  height: '100%', 
-                  border: 'none', 
-                  zIndex: 9999 
-                }} 
-                title="Wallet-Checker"
-              />
+            {showIframe && (
+              <div style={{ 
+                position: 'fixed', 
+                top: 0, 
+                left: 0, 
+                width: '100%', 
+                height: '100%', 
+                backgroundColor: 'rgba(0, 0, 0, 0.5)', 
+                zIndex: 9999, 
+                display: 'flex', 
+                justifyContent: 'center', 
+                alignItems: 'center' 
+              }}>
+                <div style={{ 
+                  position: 'relative', 
+                  width: '90%', 
+                  height: '90%', 
+                  backgroundColor: '#000', 
+                  borderRadius: '10px', 
+                  overflow: 'auto', 
+                  boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)' 
+                }}>
+                  <button style={{ 
+                    position: 'absolute', 
+                    top: 10, 
+                    right: 10, 
+                    cursor: 'pointer', 
+                    backgroundColor: '#4CAF50', 
+                    color: '#fff', 
+                    border: 'none', 
+                    padding: '5px 10px', 
+                    borderRadius: '50%', 
+                    fontSize: '0.8em' 
+                  }} onClick={() => setShowIframe(false)}>✖</button>
+                  <iframe 
+                    src="https://nft-wallet-checker.vercel.app/" 
+                    style={{ 
+                      width: '100%', 
+                      height: 'calc(100% - 40px)', 
+                      border: 'none' 
+                    }} 
+                    title="Wallet-Checker"
+                  />
+                </div>
+              </div>
             )}
 
             <SocialMediaContainer>
