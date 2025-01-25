@@ -9,6 +9,8 @@ import logoImage from './assets/logo.jpg';
 import backgroundImage from './assets/kanjix.png';
 import blogoImage from './assets/Blogo.png'; // Import the Blogo image
 import kanjixGif from './assets/kanjix.gif'; // Import the GIF for mobile
+import { Link, BrowserRouter as Router, Route, Routes } from 'react-router-dom'; // Use Routes instead of Switch
+// import CheckerApp from './checker-app/CheckerApp'; // Ensure this path is correct
 
 // Add a keyframe animation for slide-in
 const slideInFromRight = keyframes`
@@ -510,6 +512,7 @@ function App() {
   const [currentColorScheme, setCurrentColorScheme] = useState(colorSchemes.default);
   const [isHovered, setIsHovered] = useState(false);
   const [mousePos, setMousePos] = useState({ x: '50%', y: '50%' });
+  const [showIframe, setShowIframe] = useState(false); // State to manage iframe visibility
 
   const particlesInit = async (main) => {
     await loadFull(main);
@@ -619,145 +622,169 @@ function App() {
   };
 
   return (
-    <AppContainer colorScheme={currentColorScheme}>
-      <ParticleBackground
-        id="tsparticles"
-        init={particlesInit}
-        options={getParticlesConfig(currentColorScheme.particle)}
-      />
-      
-      <Logo 
-        src={logoImage}
-        alt="Logo"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-      />
+    <Router>
+      <Routes>
+        {/* <Route path="/checker-app" element={<CheckerApp />} /> */}
+        <Route path="/" element={
+          <AppContainer colorScheme={currentColorScheme}>
+            <ParticleBackground
+              id="tsparticles"
+              init={particlesInit}
+              options={getParticlesConfig(currentColorScheme.particle)}
+            />
+            
+            <Logo 
+              src={logoImage}
+              alt="Logo"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            />
 
-      <KanjixImage
-        src={window.innerWidth <= 480 ? kanjixGif : backgroundImage} // Use GIF for mobile, PNG for desktop
-        alt="Kanjix"
-        initial={{ x: 200, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{
-          type: "spring",
-          stiffness: 50,
-          damping: 20,
-          duration: 1.5
-        }}
-      />
+            <KanjixImage
+              src={window.innerWidth <= 480 ? kanjixGif : backgroundImage} // Use GIF for mobile, PNG for desktop
+              alt="Kanjix"
+              initial={{ x: 200, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{
+                type: "spring",
+                stiffness: 50,
+                damping: 20,
+                duration: 1.5
+              }}
+            />
 
-      <QuoteContainer
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.5 }}
-      >
-        <QuoteText colorScheme={currentColorScheme}>
-          <span className="word">Rise</span>
-          <span className="word">Beyond</span>
-          <span className="word">Limits</span>
-        </QuoteText>
-      </QuoteContainer>
+            <QuoteContainer
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.5 }}
+            >
+              <QuoteText colorScheme={currentColorScheme}>
+                <span className="word">Rise</span>
+                <span className="word">Beyond</span>
+                <span className="word">Limits</span>
+              </QuoteText>
+            </QuoteContainer>
 
-      <ButtonContainer
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ 
-          duration: 1,
-          delay: 1.2,
-          ease: "easeInOut"
-        }}
-      >
-        <InteractiveButton
-          isHovered={isHovered}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={() => setIsHovered(false)}
-          whileHover={{ 
-            scale: 1.02,
-            transition: { 
-              duration: 0.4,
-              ease: "easeInOut"
-            }
-          }}
-          whileTap={{ 
-            scale: 0.96,
-            y: 2,
-            transition: { 
-              duration: 0.1,
-              ease: "easeInOut"
-            }
-          }}
-        >
-          Coming Soon
-          <img 
-            src={blogoImage} 
-            alt="Blogo" 
-            style={{ 
-              width: '50px',  // Adjust width
-              height: '30px', // Adjust height
-              marginLeft: '0px',
-              marginRight: '-10px', // Add some space between text and image
-              objectFit: 'contain' // Ensure the image maintains its aspect ratio
-            }} 
-          />
-        </InteractiveButton>
-      </ButtonContainer>
+            <ButtonContainer
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ 
+                duration: 1,
+                delay: 1.2,
+                ease: "easeInOut"
+              }}
+            >
+              <InteractiveButton
+                isHovered={isHovered}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={() => setIsHovered(false)}
+                whileHover={{ 
+                  scale: 1.02,
+                  transition: { 
+                    duration: 0.4,
+                    ease: "easeInOut"
+                  }
+                }}
+                whileTap={{ 
+                  scale: 0.96,
+                  y: 2,
+                  transition: { 
+                    duration: 0.1,
+                    ease: "easeInOut"
+                  }
+                }}
+                onClick={() => setShowIframe(true)} // Set iframe visibility on click
+              >
+                <span style={{ color: 'rgb(194, 144, 22)', textDecoration: 'none', fontSize: '1.2em' }}>Coming Soon</span>
+                <img 
+                  src={blogoImage} 
+                  alt="Blogo" 
+                  style={{ 
+                    width: '50px',  
+                    height: '30px', 
+                    marginLeft: '0px',
+                    marginRight: '-10px', 
+                    objectFit: 'contain' 
+                  }} 
+                />
+              </InteractiveButton>
+            </ButtonContainer>
 
-      <SocialMediaContainer>
-        <XCard 
-          href="https://x.com/KanjiiX"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 200 250">
-            <g fill="#1DA1F2" fillRule="nonzero" stroke="none" strokeWidth="1" strokeLinecap="butt" strokeLinejoin="miter" strokeMiterlimit="10" strokeDasharray="" strokeDashoffset="0" fontFamily="none" fontWeight="none" fontSize="none" textAnchor="none" style={{ mixBlendMode: 'normal' }}>
-              <g transform="scale(5.12,5.12)">
-                <path d="M5.91992,6l14.66211,21.375l-14.35156,16.625h3.17969l12.57617,-14.57812l10,14.57813h12.01367l-15.31836,-22.33008l13.51758,-15.66992h-3.16992l-11.75391,13.61719l-9.3418,-13.61719zM9.7168,8h7.16406l23.32227,34h-7.16406z"></path>
-              </g>
-            </g>
-          </svg>
-        </XCard>
+            {showIframe && ( // Conditionally render the iframe
+              <iframe 
+                src="https://nft-wallet-checker.vercel.app/" 
+                style={{ 
+                  position: 'fixed', 
+                  top: 0, 
+                  left: 0, 
+                  width: '100%', 
+                  height: '100%', 
+                  border: 'none', 
+                  zIndex: 9999 
+                }} 
+                title="Wallet-Checker"
+              />
+            )}
 
-        <SocialIcon 
-          href="https://discord.gg/kanjix"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <DiscordIcon width="28" height="28" viewBox="0 0 24 24">
-            <path d="M19.952,5.672c-1.904-1.531-4.916-1.79-5.044-1.801c-0.201-0.017-0.392,0.097-0.474,0.281 c0.006,0.012-0.072,0.163-0.145,0.398c1.259,0.212,2.806,0.64,4.206,1.509c0.224,0.139,0.293,0.434,0.154,0.659 c-0.09,0.146-0.247,0.226-0.407,0.226c-0.086,0-0.173-0.023-0.252-0.072C15.584,5.38,12.578,5.305,12,5.305S8.415,5.38,6.011,6.872 c-0.225,0.14-0.519,0.07-0.659-0.154c-0.14-0.225-0.07-0.519,0.154-0.659c1.4-0.868,2.946-1.297,4.206-1.509 c-0.074-0.236-0.14-0.386-0.145-0.398C9.484,3.968,9.294,3.852,9.092,3.872c-0.127,0.01-3.139,0.269-5.069,1.822 C3.015,6.625,1,12.073,1,16.783c0,0.083,0.022,0.165,0.063,0.237c1.391,2.443,5.185,3.083,6.05,3.111c0.005,0,0.01,0,0.015,0 c0.153,0,0.297-0.073,0.387-0.197l0.875-1.202c-2.359-0.61-3.564-1.645-3.634-1.706c-0.198-0.175-0.217-0.477-0.042-0.675 c0.175-0.198,0.476-0.217,0.674-0.043c0.029,0.026,2.248,1.909,6.612,1.909c4.372,0,6.591-1.891,6.613-1.91 c0.198-0.172,0.5-0.154,0.674,0.045c0.174,0.198,0.155,0.499-0.042,0.673c-0.07,0.062-1.275,1.096-3.634,1.706l0.875,1.202 c0.09,0.124,0.234,0.197,0.387,0.197c0.005,0,0.01,0,0.015,0c0.865-0.027,4.659-0.667,6.05-3.111 C22.978,16.947,23,16.866,23,16.783C23,12.073,20.985,6.625,19.952,5.672z M8.891,14.87c-0.924,0-1.674-0.857-1.674-1.913 s0.749-1.913,1.674-1.913s1.674,0.857,1.674,1.913S9.816,14.87,8.891,14.87z M15.109,14.87c-0.924,0-1.674-0.857-1.674-1.913 s0.749-1.913,1.674-1.913c0.924,0,1.674,0.857,1.674,1.913S16.033,14.87,15.109,14.87z"/>
-          </DiscordIcon>
-        </SocialIcon>
+            <SocialMediaContainer>
+              <XCard 
+                href="https://x.com/KanjiiX"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 200 250">
+                  <g fill="#1DA1F2" fillRule="nonzero" stroke="none" strokeWidth="1" strokeLinecap="butt" strokeLinejoin="miter" strokeMiterlimit="10" strokeDasharray="" strokeDashoffset="0" fontFamily="none" fontWeight="none" fontSize="none" textAnchor="none" style={{ mixBlendMode: 'normal' }}>
+                    <g transform="scale(5.12,5.12)">
+                      <path d="M5.91992,6l14.66211,21.375l-14.35156,16.625h3.17969l12.57617,-14.57812l10,14.57813h12.01367l-15.31836,-22.33008l13.51758,-15.66992h-3.16992l-11.75391,13.61719l-9.3418,-13.61719zM9.7168,8h7.16406l23.32227,34h-7.16406z"></path>
+                    </g>
+                  </g>
+                </svg>
+              </XCard>
 
-        {/* <SocialIcon 
-          href="https://opensea.io"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <OpenSeaIcon width="28" height="28" viewBox="0 0 24 24">
-            <path d="M12 0C5.374 0 0 5.374 0 12s5.374 12 12 12s12-5.374 12-12S18.626 0 12 0zM5.92 12.403l.051-.081 3.123-4.884a.107.107 0 0 1 .187.014c.52 1.169.972 2.623.76 3.528c-.088.372-.335.876-.614 1.342a2.405 2.405 0 0 1-.117.199a.106.106 0 0 1-.09.045H6.013a.106.106 0 0 1-.091-.163zm13.914 1.68a.109.109 0 0 1-.065.101c-.243.103-1.07.485-1.414.962c-.878 1.222-1.548 2.97-3.048 2.97H9.053a4.019 4.019 0 0 1-4.013-4.028v-.072c0-.058.048-.106.108-.106h3.485c.07 0 .12.063.115.132c-.026.226.017.459.125.67c.206.42.636.682 1.099.682h1.726v-1.347H9.99a.11.11 0 0 1-.089-.173l.063-.09c.16-.231.391-.586.621-.992c.156-.274.308-.566.43-.86c.024-.052.043-.107.065-.161c.033-.094.067-.182.091-.269a4.57 4.57 0 0 0 .065-.223c.057-.25.081-.514.081-.787c0-.108-.004-.221-.014-.327c-.005-.117-.02-.235-.034-.352a3.415 3.415 0 0 0-.048-.312a6.494 6.494 0 0 0-.098-.468l-.014-.06c-.03-.108-.056-.21-.09-.317a11.824 11.824 0 0 0-.328-.972a5.212 5.212 0 0 0-.142-.355c-.072-.178-.146-.339-.213-.49a3.564 3.564 0 0 1-.094-.197a4.658 4.658 0 0 0-.103-.213c-.024-.053-.053-.104-.072-.152l-.211-.388c-.029-.053.019-.118.077-.101l1.32.357h.01l.173.05l.192.054l.07.019v-.783c0-.379.302-.686.679-.686a.66.66 0 0 1 .477.202a.69.69 0 0 1 .2.484V6.65l.141.039c.01.005.022.01.031.017c.034.024.084.062.147.108c.05.038.103.086.165.137a10.351 10.351 0 0 1 .574.504c.214.199.454.432.684.691c.065.074.127.146.192.226c.062.079.132.156.19.232c.079.104.16.212.235.324c.033.053.074.108.105.161c.096.142.178.288.257.435c.034.067.067.141.096.213c.089.197.159.396.202.598a.65.65 0 0 1 .029.132v.01c.014.057.019.12.024.184a2.057 2.057 0 0 1-.106.874c-.031.084-.06.17-.098.254c-.075.17-.161.343-.264.502c-.034.06-.075.122-.113.182c-.043.063-.089.123-.127.18a3.89 3.89 0 0 1-.173.221c-.053.072-.106.144-.166.209c-.081.098-.161.19-.242.278c-.048.058-.1.118-.156.17c-.052.06-.108.113-.156.161c-.084.084-.15.147-.208.202l-.137.122a.102.102 0 0 1-.072.03h-1.051v1.346h1.322c.295 0 .576-.104.804-.298c.077-.067.415-.36.816-.802a.094.094 0 0 1 .05-.03l3.65-1.057a.108.108 0 0 1 .138.103z"/>
-          </OpenSeaIcon>
-        </SocialIcon>
+              <SocialIcon 
+                href="https://discord.gg/kanjix"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <DiscordIcon width="28" height="28" viewBox="0 0 24 24">
+                  <path d="M19.952,5.672c-1.904-1.531-4.916-1.79-5.044-1.801c-0.201-0.017-0.392,0.097-0.474,0.281 c0.006,0.012-0.072,0.163-0.145,0.398c1.259,0.212,2.806,0.64,4.206,1.509c0.224,0.139,0.293,0.434,0.154,0.659 c-0.09,0.146-0.247,0.226-0.407,0.226c-0.086,0-0.173-0.023-0.252-0.072C15.584,5.38,12.578,5.305,12,5.305S8.415,5.38,6.011,6.872 c-0.225,0.14-0.519,0.07-0.659-0.154c-0.14-0.225-0.07-0.519,0.154-0.659c1.4-0.868,2.946-1.297,4.206-1.509 c-0.074-0.236-0.14-0.386-0.145-0.398C9.484,3.968,9.294,3.852,9.092,3.872c-0.127,0.01-3.139,0.269-5.069,1.822 C3.015,6.625,1,12.073,1,16.783c0,0.083,0.022,0.165,0.063,0.237c1.391,2.443,5.185,3.083,6.05,3.111c0.005,0,0.01,0,0.015,0 c0.153,0,0.297-0.073,0.387-0.197l0.875-1.202c-2.359-0.61-3.564-1.645-3.634-1.706c-0.198-0.175-0.217-0.477-0.042-0.675 c0.175-0.198,0.476-0.217,0.674-0.043c0.029,0.026,2.248,1.909,6.612,1.909c4.372,0,6.591-1.891,6.613-1.91 c0.198-0.172,0.5-0.154,0.674,0.045c0.174,0.198,0.155,0.499-0.042,0.673c-0.07,0.062-1.275,1.096-3.634,1.706l0.875,1.202 c0.09,0.124,0.234,0.197,0.387,0.197c0.005,0,0.01,0,0.015,0c0.865-0.027,4.659-0.667,6.05-3.111 C22.978,16.947,23,16.866,23,16.783C23,12.073,20.985,6.625,19.952,5.672z M8.891,14.87c-0.924,0-1.674-0.857-1.674-1.913 s0.749-1.913,1.674-1.913s1.674,0.857,1.674,1.913S9.816,14.87,8.891,14.87z M15.109,14.87c-0.924,0-1.674-0.857-1.674-1.913 s0.749-1.913,1.674-1.913c0.924,0,1.674,0.857,1.674,1.913S16.033,14.87,15.109,14.87z"/>
+                </DiscordIcon>
+              </SocialIcon>
 
-        <SocialIcon 
-          href="https://instagram.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <InstagramIcon width="28" height="28" viewBox="0 0 24 24">
-            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-          </InstagramIcon>
-        </SocialIcon> */}
-      </SocialMediaContainer>
+              {/* <SocialIcon 
+                href="https://opensea.io"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <OpenSeaIcon width="28" height="28" viewBox="0 0 24 24">
+                  <path d="M12 0C5.374 0 0 5.374 0 12s5.374 12 12 12s12-5.374 12-12S18.626 0 12 0zM5.92 12.403l.051-.081 3.123-4.884a.107.107 0 0 1 .187.014c.52 1.169.972 2.623.76 3.528c-.088.372-.335.876-.614 1.342a2.405 2.405 0 0 1-.117.199a.106.106 0 0 1-.09.045H6.013a.106.106 0 0 1-.091-.163zm13.914 1.68a.109.109 0 0 1-.065.101c-.243.103-1.07.485-1.414.962c-.878 1.222-1.548 2.97-3.048 2.97H9.053a4.019 4.019 0 0 1-4.013-4.028v-.072c0-.058.048-.106.108-.106h3.485c.07 0 .12.063.115.132c-.026.226.017.459.125.67c.206.42.636.682 1.099.682h1.726v-1.347H9.99a.11.11 0 0 1-.089-.173l.063-.09c.16-.231.391-.586.621-.992c.156-.274.308-.566.43-.86c.024-.052.043-.107.065-.161c.033-.094.067-.182.091-.269a4.57 4.57 0 0 0 .065-.223c.057-.25.081-.514.081-.787c0-.108-.004-.221-.014-.327c-.005-.117-.02-.235-.034-.352a3.415 3.415 0 0 0-.048-.312a6.494 6.494 0 0 0-.098-.468l-.014-.06c-.03-.108-.056-.21-.09-.317a11.824 11.824 0 0 0-.328-.972a5.212 5.212 0 0 0-.142-.355c-.072-.178-.146-.339-.213-.49a3.564 3.564 0 0 1-.094-.197a4.658 4.658 0 0 0-.103-.213c-.024-.053-.053-.104-.072-.152l-.211-.388c-.029-.053.019-.118.077-.101l1.32.357h.01l.173.05l.192.054l.07.019v-.783c0-.379.302-.686.679-.686a.66.66 0 0 1 .477.202a.69.69 0 0 1 .2.484V6.65l.141.039c.01.005.022.01.031.017c.034.024.084.062.147.108c.05.038.103.086.165.137a10.351 10.351 0 0 1 .574.504c.214.199.454.432.684.691c.065.074.127.146.192.226c.062.079.132.156.19.232c.079.104.16.212.235.324c.033.053.074.108.105.161c.096.142.178.288.257.435c.034.067.067.141.096.213c.089.197.159.396.202.598a.65.65 0 0 1 .029.132v.01c.014.057.019.12.024.184a2.057 2.057 0 0 1-.106.874c-.031.084-.06.17-.098.254c-.075.17-.161.343-.264.502c-.034.06-.075.122-.113.182c-.043.063-.089.123-.127.18a3.89 3.89 0 0 1-.173.221c-.053.072-.106.144-.166.209c-.081.098-.161.19-.242.278c-.048.058-.1.118-.156.17c-.052.06-.108.113-.156.161c-.084.084-.15.147-.208.202l-.137.122a.102.102 0 0 1-.072.03h-1.051v1.346h1.322c.295 0 .576-.104.804-.298c.077-.067.415-.36.816-.802a.094.094 0 0 1 .05-.03l3.65-1.057a.108.108 0 0 1 .138.103z"/>
+                </OpenSeaIcon>
+              </SocialIcon>
 
-      <PageFill 
-        className={isHovered ? 'active' : ''} 
-        style={{ '--mouse-x': mousePos.x, '--mouse-y': mousePos.y }}
-      />
+              <SocialIcon 
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <InstagramIcon width="28" height="28" viewBox="0 0 24 24">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                </InstagramIcon>
+              </SocialIcon> */}
+            </SocialMediaContainer>
 
-      {/* <Signature>
-       by <a href="https://aradhya.vercel.app/" target="_blank" rel="noopener noreferrer">Aradhya</a>
-      </Signature> */}
-    </AppContainer>
+            <PageFill 
+              className={isHovered ? 'active' : ''} 
+              style={{ '--mouse-x': mousePos.x, '--mouse-y': mousePos.y }}
+            />
+
+            {/* <Signature>
+             by <a href="https://aradhya.vercel.app/" target="_blank" rel="noopener noreferrer">Aradhya</a>
+            </Signature> */}
+          </AppContainer>
+        } />
+      </Routes>
+    </Router>
   );
 }
 
