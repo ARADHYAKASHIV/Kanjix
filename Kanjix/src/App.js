@@ -696,7 +696,7 @@ function App() {
                 }}
                 onClick={() => setShowIframe(true)} // Set iframe visibility on click
               >
-                <span style={{ color: 'rgb(194, 144, 22)', textDecoration: 'none', fontSize: '1.2em' }}>Coming Soon</span>
+                <span style={{ color: 'rgb(194, 144, 22)', textDecoration: 'none', fontSize: '1.2em' }}>Check Wallet</span>
                 <img 
                   src={blogoImage} 
                   alt="Blogo" 
